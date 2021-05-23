@@ -1,0 +1,17 @@
+{
+  "name": "binary-blocks",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "author": "Kai Kurosawa",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "excalibur": "^0.24.5"
+  }
+}
