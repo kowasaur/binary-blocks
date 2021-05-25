@@ -1,26 +1,40 @@
 import { Actor, Color, Vector, Label, TextAlign, CollisionType } from "excalibur";
 import { game } from "./index";
-import { binary } from "./utils";
+import { binary, randInt, randNumArray } from "./utils";
 
 export class Block extends Actor {
-  constructor(num: number) {
+  public answerOptions: number[];
+  // Index of the correct answer in the answerOptions
+  public answerIndex: number;
+
+  constructor() {
+    const ansI = randInt(0, 3);
+    const ansO = randNumArray(0, 2 ** game.level - 1, 4);
+
     super({
       x: 200,
       y: 20,
       width: 200,
       height: 40,
       color: Color.Black,
-      vel: new Vector(0, 50),
+      vel: new Vector(0, 60),
       children: [
         new Label({
           color: Color.White,
-          text: binary(num, game.level),
+          text: binary(ansO[ansI], game.level),
           fontSize: 25,
           textAlign: TextAlign.Center,
           y: 14,
         }),
       ],
     });
+
     this.body.collider.type = CollisionType.Active;
+    this.answerOptions = ansO;
+    this.answerIndex = ansI;
+  }
+
+  highlight() {
+    this.color = Color.Red;
   }
 }
