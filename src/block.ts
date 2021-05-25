@@ -8,7 +8,7 @@ export class Block extends Actor {
   public answerIndex: number;
 
   constructor() {
-    const ansI = randInt(0, 3);
+    const ansI = randInt(0, game.level === 1 ? 1 : 3);
     const ansO = randNumArray(0, 2 ** game.level - 1, 4);
 
     super({
@@ -16,7 +16,7 @@ export class Block extends Actor {
       y: 20,
       width: 200,
       height: 40,
-      color: Color.Black,
+      color: Color.fromHex("#43e65e"), // green
       vel: new Vector(0, 60),
       children: [
         new Label({
@@ -35,6 +35,6 @@ export class Block extends Actor {
   }
 
   highlight() {
-    this.color = Color.Red;
+    this.color = Color.Vermilion;
   }
 }

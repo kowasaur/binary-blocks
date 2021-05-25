@@ -1,4 +1,14 @@
 #b3,
 #b4 {
+  /* On the first level there's only 1 and 0 so there only needs to be two buttons */
   display: none;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
