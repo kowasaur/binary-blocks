@@ -12,9 +12,15 @@ function capitaliseWord(word: string) {
   return word.charAt(0).toUpperCase() + word.toLowerCase().slice(1);
 }
 
-export function displayStat(stat: string, num: number | string) {
-  const element = document.getElementById(stat);
-  element!.innerText = `${capitaliseWord(stat)}: ${num}`;
+export function displayStat(stat: string, num: number | string, isCorrect: boolean) {
+  const element = document.getElementById(stat)!;
+  element.innerText = `${capitaliseWord(stat)}: ${num}`;
+
+  // These two lines reset the animation https://stackoverflow.com/a/45036752/13837629
+  element.style.animation = "none";
+  element.offsetHeight;
+
+  element.style.animation = `${isCorrect ? "correct" : "incorrect"} 0.5s`;
 }
 
 const rand = new Random();
@@ -36,9 +42,14 @@ export function randNumArray(minValue: number, maxValue: number, size: number) {
   const randNums = new Set();
 
   while (randNums.size !== size) randNums.add(randInt(minValue, maxValue));
-  return [...randNums] as number[];
+  return numericalSort([...randNums] as number[]);
 }
 
 export function arrayIndexToButtonId(index: number) {
   return `b${index + 1}`;
+}
+
+function numericalSort(numberArray: number[]) {
+  // https://stackoverflow.com/a/1063027/13837629
+  return numberArray.sort((a, b) => a - b);
 }

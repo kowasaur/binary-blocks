@@ -12,3 +12,15 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes correct {
+  10% {
+    color: green;
+  }
+}
+
+@keyframes incorrect {
+  10% {
+    color: red;
+  }
+}

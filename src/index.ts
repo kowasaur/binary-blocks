@@ -5,12 +5,13 @@ import { arrayIndexToButtonId, displayStat } from "./utils";
 Physics.acc.y = 40;
 
 const buttonElements = [...Array(4).keys()].map(num => document.getElementById(`b${num + 1}`)!);
+
 // TODO: Pause meter after x amount of questions in a row
-// TODO: Maybe delete all blocks when level up
+
 class Game extends Engine {
   public level = 1;
   public score = 0;
-  // TODO: high score that saves in local storage
+  public highscore;
   public blockList: Block[] = [];
 
   private ground: Actor;
@@ -27,6 +28,13 @@ class Game extends Engine {
     const timer = new Timer({ interval: 5000, repeats: true, fcn: () => this.newBlock() });
     this.add(timer);
     this.newBlockLoop = timer;
+
+    try {
+      this.highscore = Number(localStorage.getItem("highscore"));
+      displayStat("highscore", this.highscore, true);
+    } catch {
+      this.highscore = 0;
+    }
   }
 
   onInitialize() {
@@ -42,6 +50,7 @@ class Game extends Engine {
 
     // Game over
     if (this.blockList.length === 17) {
+      buttonElements.forEach(button => (button.style.display = "none"));
       this.canvas.style.animation = "spin 0.5s ease-in-out";
       this.ground.kill();
       Physics.acc.y = 500;
@@ -64,8 +73,18 @@ class Game extends Engine {
 
   changeScore(amount: number) {
     this.score += amount;
+
+    const newScore = this.score;
     // TODO: Display score in binary maybe
-    displayStat("score", this.score);
+    displayStat("score", newScore, amount > 0);
+
+    if (newScore > this.highscore) {
+      console.log("test");
+
+      this.highscore = newScore;
+      localStorage.setItem("highscore", newScore.toString());
+      displayStat("highscore", newScore, amount > 0);
+    }
   }
 
   displayButtons() {
@@ -88,7 +107,7 @@ class Game extends Engine {
     // Increase level
     if (this.score === 2 ** this.level) {
       this.level++;
-      displayStat("level", this.level);
+      displayStat("level", this.level, true);
       // Remove all blocks currently on screen
       this.blockList.forEach(block => block.kill());
       this.blockList = [];
@@ -103,7 +122,6 @@ class Game extends Engine {
     const penalty = Math.ceil(this.score * 0.25) * -1;
     this.changeScore(penalty);
     this.newBlock();
-    // TODO: Notify the user somehow they are wrong
   }
 }
 
