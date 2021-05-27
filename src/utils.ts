@@ -12,9 +12,9 @@ function capitaliseWord(word: string) {
   return word.charAt(0).toUpperCase() + word.toLowerCase().slice(1);
 }
 
-export function displayStat(stat: string, num: number | string, isCorrect: boolean) {
+export function displayStat(stat: string, num: number, isCorrect: boolean, isBinary: boolean) {
   const element = document.getElementById(stat)!;
-  element.innerText = `${capitaliseWord(stat)}: ${num}`;
+  element.innerText = `${capitaliseWord(stat)}: ${isBinary ? binary(num) : num}`;
 
   // These two lines reset the animation https://stackoverflow.com/a/45036752/13837629
   element.style.animation = "none";

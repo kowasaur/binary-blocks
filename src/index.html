@@ -10,12 +10,19 @@
   </head>
   <body>
     <canvas id="game"></canvas>
-    <h1 id="level">Level: 1</h1>
-    <h1 id="score">Score: 0</h1>
-    <h1 id="highscore">Highscore: 0</h1>
-    <button id="b1"></button>
-    <button id="b2"></button>
-    <button id="b3"></button>
-    <button id="b4"></button>
+    <div>
+      <h1 id="level">Level: 1</h1>
+      <h1 id="score">Score: 0</h1>
+      <h1 id="highscore">Highscore: 0</h1>
+      <button id="b1"></button>
+      <button id="b2"></button>
+      <button id="b3"></button>
+      <button id="b4"></button>
+
+      <input type="checkbox" id="displayInBinary" name="displayInBinary" />
+      <label for="displayInBinary">Display Scores in Binary</label>
+
+      <button id="refresh" onclick="location.reload()">Play Again</button>
+    </div>
   </body>
 </html>

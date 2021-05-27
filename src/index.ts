@@ -5,6 +5,8 @@ import { arrayIndexToButtonId, displayStat } from "./utils";
 Physics.acc.y = 40;
 
 const buttonElements = [...Array(4).keys()].map(num => document.getElementById(`b${num + 1}`)!);
+const refreshButton = document.getElementById("refresh")!;
+const binaryCheckbox = document.getElementById("displayInBinary")!;
 
 // TODO: Pause meter after x amount of questions in a row
 
@@ -12,6 +14,7 @@ class Game extends Engine {
   public level = 1;
   public score = 0;
   public highscore;
+  public displayInBinary = false;
   public blockList: Block[] = [];
 
   private ground: Actor;
@@ -31,7 +34,7 @@ class Game extends Engine {
 
     try {
       this.highscore = Number(localStorage.getItem("highscore"));
-      displayStat("highscore", this.highscore, true);
+      displayStat("highscore", this.highscore, true, false);
     } catch {
       this.highscore = 0;
     }
@@ -57,7 +60,7 @@ class Game extends Engine {
       this.newBlockLoop.cancel();
       const delay = new Timer({ interval: 7000, fcn: () => this.stop() });
       this.addTimer(delay);
-      // TODO: Play again button
+      refreshButton.style.display = "inline";
     }
   }
 
@@ -75,15 +78,14 @@ class Game extends Engine {
     this.score += amount;
 
     const newScore = this.score;
-    // TODO: Display score in binary maybe
-    displayStat("score", newScore, amount > 0);
+    displayStat("score", newScore, amount > 0, this.displayInBinary);
 
     if (newScore > this.highscore) {
       console.log("test");
 
       this.highscore = newScore;
       localStorage.setItem("highscore", newScore.toString());
-      displayStat("highscore", newScore, amount > 0);
+      displayStat("highscore", newScore, amount > 0, this.displayInBinary);
     }
   }
 
@@ -107,7 +109,7 @@ class Game extends Engine {
     // Increase level
     if (this.score === 2 ** this.level) {
       this.level++;
-      displayStat("level", this.level, true);
+      displayStat("level", this.level, true, this.displayInBinary);
       // Remove all blocks currently on screen
       this.blockList.forEach(block => block.kill());
       this.blockList = [];
@@ -123,6 +125,14 @@ class Game extends Engine {
     this.changeScore(penalty);
     this.newBlock();
   }
+
+  toggleBinaryDisplay() {
+    game.displayInBinary = !game.displayInBinary;
+
+    displayStat("level", this.level, true, this.displayInBinary);
+    displayStat("score", this.score, true, this.displayInBinary);
+    displayStat("highscore", this.highscore, true, this.displayInBinary);
+  }
 }
 
 export const game = new Game();
@@ -137,5 +147,7 @@ function answer(ev: MouseEvent) {
 }
 
 buttonElements.forEach(button => (button.onclick = answer));
+
+binaryCheckbox.onclick = () => game.toggleBinaryDisplay();
 
 game.start();
