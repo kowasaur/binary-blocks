@@ -2,8 +2,9 @@ import { Actor, CollisionType, Engine, Timer, Physics } from "excalibur";
 import { Block } from "./block";
 import { arrayIndexToButtonId, displayStat } from "./utils";
 
-Physics.acc.y = 40;
+Physics.acc.y = 50;
 
+const buttonContainer = document.getElementById("buttons")!;
 const buttonElements = [...Array(4).keys()].map(num => document.getElementById(`b${num + 1}`)!);
 const refreshButton = document.getElementById("refresh")!;
 const binaryCheckbox = document.getElementById("displayInBinary")!;
@@ -53,14 +54,14 @@ class Game extends Engine {
 
     // Game over
     if (this.blockList.length === 17) {
-      buttonElements.forEach(button => (button.style.display = "none"));
+      buttonContainer.style.display = "none";
       this.canvas.style.animation = "spin 0.5s ease-in-out";
       this.ground.kill();
       Physics.acc.y = 500;
       this.newBlockLoop.cancel();
       const delay = new Timer({ interval: 7000, fcn: () => this.stop() });
       this.addTimer(delay);
-      refreshButton.style.display = "inline";
+      refreshButton.style.display = "block";
     }
   }
 

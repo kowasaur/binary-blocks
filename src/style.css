@@ -2,18 +2,46 @@
   font-family: monospace;
 }
 
+html,
 body {
-  background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
-  display: flex;
+  height: 100%;
+  margin: 0;
 }
 
-#b3,
-#b4 {
-  /* On the first level there's only 1 and 0 so there only needs to be two buttons */
-  display: none;
+body {
+  background: linear-gradient(0deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+  font-size: 1.3em;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#game {
+  border: 1px solid rgb(80, 80, 80);
+  border-radius: 4px;
+}
+
+#buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  aspect-ratio: 1;
+  margin-bottom: 1em;
+}
+
+#buttons > button {
+  font-size: 500%;
 }
 
 #refresh {
+  font-size: 2em;
+  margin-bottom: 0.6em;
+}
+
+#b3,
+#b4,
+#refresh {
+  /* On the first level there's only 1 and 0 so there only needs to be two buttons 
+  and the refresh button doesn't show until game over */
   display: none;
 }
 

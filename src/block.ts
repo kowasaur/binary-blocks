@@ -25,6 +25,7 @@ export class Block extends Actor {
           fontSize: 25,
           textAlign: TextAlign.Center,
           y: 14,
+          fontFamily: "monospace",
         }),
       ],
     });
