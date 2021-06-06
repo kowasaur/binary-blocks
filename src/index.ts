@@ -2,7 +2,7 @@ import { Actor, CollisionType, Engine, Timer, Physics } from "excalibur";
 import { Block } from "./block";
 import { arrayIndexToButtonId, displayStat } from "./utils";
 
-Physics.acc.y = 50;
+Physics.acc.y = 60;
 
 const buttonContainer = document.getElementById("buttons")!;
 const buttonElements = [...Array(4).keys()].map(num => document.getElementById(`b${num + 1}`)!);
@@ -11,6 +11,7 @@ const binaryCheckbox = document.getElementById("displayInBinary")!;
 
 // TODO: Pause meter after x amount of questions in a row
 
+// This class is the actual game
 class Game extends Engine {
   public level = 1;
   public score = 0;
@@ -122,7 +123,7 @@ class Game extends Engine {
   }
 
   wrongAnswer() {
-    const penalty = Math.ceil(this.score * 0.25) * -1;
+    const penalty = Math.ceil(this.score * 0.1) * -1;
     this.changeScore(penalty);
     this.newBlock();
   }

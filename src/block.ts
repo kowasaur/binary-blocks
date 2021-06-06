@@ -17,7 +17,7 @@ export class Block extends Actor {
       width: 200,
       height: 40,
       color: Color.fromHex("#43e65e"), // green
-      vel: new Vector(0, 60),
+      vel: new Vector(0, 70),
       children: [
         new Label({
           color: Color.White,
