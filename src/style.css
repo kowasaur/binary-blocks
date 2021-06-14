@@ -65,3 +65,12 @@ body {
     color: red;
   }
 }
+
+a,
+a:visited {
+  color: blue;
+}
+
+a:hover {
+  color: red;
+}
